@@ -6,7 +6,9 @@ import lombok.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.constraints.Size;
+import javax.validation.Valid;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -18,7 +20,7 @@ public class RestaurantApiController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/restaurant/register")
-    public void register(@RequestBody RestaurantRegisterDTO requestDTO) {
+    public void register(@RequestBody @Valid RestaurantRegisterDTO requestDTO) {
         Restaurant restaurant = Restaurant.builder()
                 .name(requestDTO.getName())
                 .minOrderPrice(requestDTO.getMinOrderPrice())
@@ -48,11 +50,13 @@ public class RestaurantApiController {
         private String name;
 
         // TODO: 2022-06-03 100원 단위로 입력하도록 구현하기 ( 2,220원은 에러 발생 )
-        @Size(min = 1000, max = 100000, message = "허용값: 1,000원 ~ 100,000원")
+        @Min(value = 1000, message = "허용값: 1,000원 ~ 100,000원")
+        @Max(value = 100000, message = "허용값: 1,000원 ~ 100,000원")
         private int minOrderPrice;
 
         // TODO: 2022-06-03 500원 단위로 입력하도록 구현하기
-        @Size(min = 0, max = 10000, message = "허용값: 0원 ~ 10,000원")
+        @Min(value = 0, message = "허용값: 0원 ~ 10,000원")
+        @Max(value = 10000, message = "허용값: 0원 ~ 10,000원")
         private int deliveryFee;
     }
 }

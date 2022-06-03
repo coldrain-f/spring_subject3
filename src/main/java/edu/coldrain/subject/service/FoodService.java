@@ -20,7 +20,7 @@ public class FoodService {
         foodRepository.saveAll(foods);
     }
 
-    public List<Food> findAllById(Long id) {
-        return foodRepository.findAllById(List.of(id));
+    public List<Food> findAllByRestaurantId(Long id) {
+        return foodRepository.findAllByRestaurantId(id);
     }
 }

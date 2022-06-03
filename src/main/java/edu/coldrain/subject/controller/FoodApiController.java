@@ -36,7 +36,7 @@ public class FoodApiController {
 
     @GetMapping("/restaurant/{restaurantId}/foods")
     public List<FoodResponseDTO> viewAll(@PathVariable Long restaurantId) {
-        return foodService.findAllById(restaurantId)
+        return foodService.findAllByRestaurantId(restaurantId)
                 .stream()
                 .map(f -> new FoodResponseDTO(f.getId(), f.getName(), f.getPrice()))
                 .collect(Collectors.toList());
