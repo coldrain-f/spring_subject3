@@ -3,7 +3,6 @@ package edu.coldrain.subject.controller;
 import edu.coldrain.subject.entity.Restaurant;
 import edu.coldrain.subject.service.RestaurantService;
 import lombok.*;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -18,16 +17,16 @@ public class RestaurantApiController {
 
     private final RestaurantService restaurantService;
 
-    @ResponseStatus(HttpStatus.CREATED)
+    // TODO: 2022-06-03 DTO 로 변환해서 응답하도록 변경하기
     @PostMapping("/restaurant/register")
-    public void register(@RequestBody @Valid RestaurantRegisterDTO requestDTO) {
+    public Restaurant register(@RequestBody @Valid RestaurantRegisterDTO requestDTO) {
         Restaurant restaurant = Restaurant.builder()
                 .name(requestDTO.getName())
                 .minOrderPrice(requestDTO.getMinOrderPrice())
                 .deliveryFee(requestDTO.getDeliveryFee())
                 .build();
 
-        restaurantService.register(restaurant);
+        return restaurantService.register(restaurant);
     }
 
     @GetMapping("/restaurants")

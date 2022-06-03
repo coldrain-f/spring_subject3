@@ -23,18 +23,15 @@ public class Food {
     @Column(name = "FOOD_ID")
     private Long id;
 
-    private String name; // 음식명
+    // 음식명
+    private String name;
 
-    private int price; // 가격
+    // 가격
+    private int price;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "RESTAURANT_ID")
     private Restaurant restaurant;
-
-    // 음식과 주문은 N:1 ?
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ORDER_ID")
-    private Order order;
 
     @Builder
     public Food(String name, int price, Restaurant restaurant) {

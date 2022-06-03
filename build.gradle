@@ -32,10 +32,12 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.projectlombok:lombok:1.18.20'
     compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     runtimeOnly 'com.h2database:h2'
     annotationProcessor 'org.projectlombok:lombok'
+    testAnnotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
     // QueryDSL 추가
@@ -44,6 +46,8 @@ dependencies {
 
     // SQL 값 확인 외부 라이브러리
     implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.5.8'
+
+
 }
 
 tasks.named('test') {

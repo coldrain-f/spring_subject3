@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -22,5 +23,9 @@ public class FoodService {
 
     public List<Food> findAllByRestaurantId(Long id) {
         return foodRepository.findAllByRestaurantId(id);
+    }
+
+    public Optional<Food> findById(Long id) {
+        return foodRepository.findById(id);
     }
 }

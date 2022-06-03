@@ -1,19 +1,21 @@
 package edu.coldrain.subject.entity;
 
 import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "ORDERS") // ORDER 키워드라서 사용 불가능
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Getter
+@Table(name = "ORDERS")
 @SequenceGenerator(
         name = "ORDER_SEQ_GENERATOR",
         sequenceName = "ORDER_SEQ",
         allocationSize = 100)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Order {
 
     @Id @GeneratedValue(
@@ -22,12 +24,26 @@ public class Order {
     @Column(name = "ORDER_ID")
     private Long id;
 
-    // 주문과 음식점은 N:1 ?
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "RESTAURANT_ID")
     private Restaurant restaurant;
 
-    // 주문과 음식은 1:N ?
-    @OneToMany(mappedBy = "order")
-    private List<Food> foods = new ArrayList<>();
+    // 최종 결제 금액
+    private int totalPrice;
+
+    public void calcTotalPrice(List<OrderFood> orderFoodList) {
+        int sum = 0;
+        for (OrderFood orderFood : orderFoodList) {
+            sum += orderFood.getPrice();
+        }
+        sum += this.restaurant.getDeliveryFee();
+        this.totalPrice = sum;
+    }
+
+    @Builder
+    public Order(Restaurant restaurant, int totalPrice) {
+        this.restaurant = restaurant;
+        this.totalPrice = totalPrice;
+    }
 }

@@ -5,25 +5,30 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 @Getter
+@SequenceGenerator(
+        name = "RESTAURANT_SEQ_GENERATOR",
+        sequenceName = "RESTAURANT_SEQ",
+        allocationSize = 100)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Restaurant {
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     @Column(name = "RESTAURANT_ID")
     private Long id;
 
-    private String name; // 음식점 이름
+    // 음식점 이름
+    private String name;
 
-    private int minOrderPrice; // 최소 주문 가격
+    // 최소 주문 가격
+    private int minOrderPrice;
 
-    private int deliveryFee; // 기본 배달비
+    // 기본 배달비
+    private int deliveryFee;
 
     @Builder
     public Restaurant(String name, int minOrderPrice, int deliveryFee) {

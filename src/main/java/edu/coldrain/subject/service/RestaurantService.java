@@ -14,8 +14,8 @@ public class RestaurantService {
 
     private final RestaurantRepository restaurantRepository;
 
-    public void register(Restaurant restaurant) {
-        restaurantRepository.save(restaurant);
+    public Restaurant register(Restaurant restaurant) {
+        return restaurantRepository.save(restaurant);
     }
 
     public List<Restaurant> findAll() {

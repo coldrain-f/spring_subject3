@@ -20,7 +20,6 @@ public class FoodApiController {
     private final FoodService foodService;
     private final RestaurantService restaurantService;
 
-    @ResponseStatus(HttpStatus.CREATED) // 다건 등록은 location 을 어떻게 처리?
     @PostMapping("/restaurant/{restaurantId}/food/register")
     public void register(@PathVariable Long restaurantId, @RequestBody List<FoodRegisterDTO> requestDTOs) {
         Restaurant restaurant = restaurantService.find(restaurantId)
