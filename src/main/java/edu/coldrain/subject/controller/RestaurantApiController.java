@@ -30,7 +30,7 @@ public class RestaurantApiController {
 
     @GetMapping("/restaurants")
     public List<RestaurantResponseDTO> viewAll() {
-        return restaurantService.viewAll().stream()
+        return restaurantService.findAll().stream()
                 .map(r -> new RestaurantResponseDTO(r.getId(), r.getName(), r.getMinOrderPrice(), r.getDeliveryFee()))
                 .collect(Collectors.toList());
     }

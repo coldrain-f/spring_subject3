@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -17,7 +18,11 @@ public class RestaurantService {
         restaurantRepository.save(restaurant);
     }
 
-    public List<Restaurant> viewAll() {
+    public List<Restaurant> findAll() {
         return restaurantRepository.findAll();
+    }
+
+    public Optional<Restaurant> find(Long id) {
+        return restaurantRepository.findById(id);
     }
 }
