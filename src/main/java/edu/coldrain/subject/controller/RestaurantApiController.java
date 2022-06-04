@@ -20,6 +20,13 @@ public class RestaurantApiController {
     // TODO: 2022-06-03 DTO 로 변환해서 응답하도록 변경하기
     @PostMapping("/restaurant/register")
     public Restaurant register(@RequestBody @Valid RestaurantRegisterDTO requestDTO) {
+        if (requestDTO.getMinOrderPrice() % 100 > 0) {
+            throw new IllegalArgumentException("100원 단위로 입력해 주세요.");
+        }
+        if ((requestDTO.getDeliveryFee() % 1000) % 500 != 0) {
+            throw new IllegalArgumentException("500원 단위로 입력해 주세요.");
+        }
+
         Restaurant restaurant = Restaurant.builder()
                 .name(requestDTO.getName())
                 .minOrderPrice(requestDTO.getMinOrderPrice())
@@ -48,12 +55,10 @@ public class RestaurantApiController {
     static class RestaurantRegisterDTO {
         private String name;
 
-        // TODO: 2022-06-03 100원 단위로 입력하도록 구현하기 ( 2,220원은 에러 발생 )
         @Min(value = 1000, message = "허용값: 1,000원 ~ 100,000원")
         @Max(value = 100000, message = "허용값: 1,000원 ~ 100,000원")
         private int minOrderPrice;
 
-        // TODO: 2022-06-03 500원 단위로 입력하도록 구현하기
         @Min(value = 0, message = "허용값: 0원 ~ 10,000원")
         @Max(value = 10000, message = "허용값: 0원 ~ 10,000원")
         private int deliveryFee;
