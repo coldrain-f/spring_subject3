@@ -6,9 +6,11 @@ import edu.coldrain.subject.service.FoodService;
 import edu.coldrain.subject.service.RestaurantService;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -22,11 +24,19 @@ public class FoodApiController {
 
     @PostMapping("/restaurant/{restaurantId}/food/register")
     public void register(@PathVariable Long restaurantId, @RequestBody List<FoodRegisterDTO> requestDTOs) {
+        for (FoodRegisterDTO requestDTO : requestDTOs) {
+            if (requestDTO.getPrice() % 100 > 0) {
+                throw new IllegalArgumentException("100원 단위로 입력해 주세요.");
+            }
+            if (requestDTO.getPrice() < 100 || requestDTO.getPrice() > 1000000) {
+                throw new IllegalArgumentException("허용값: 100원 ~ 1,000,000원");
+            }
+        }
+
         Restaurant restaurant = restaurantService.find(restaurantId)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 음식점입니다."));
 
-        // TODO: 2022-06-03 같은 음식점 내에서는 음식 이름이 중복될 수 없도록 구현
-        final List<Food> foods = requestDTOs.stream()
+        List<Food> foods = requestDTOs.stream()
                 .map(f -> new Food(f.getName(), f.getPrice(), restaurant))
                 .collect(Collectors.toList());
 
@@ -51,9 +61,6 @@ public class FoodApiController {
     @Data
     static class FoodRegisterDTO {
         private String name;
-
-        // TODO: 2022-06-03 100원 단위로 입력하도록 구현 ( 2,220원 입력 시 에러 발생 )
-        @Size(min = 100, max = 1000000, message = "허용값: 100원 ~ 1,000,000원")
         private int price;
     }
 }

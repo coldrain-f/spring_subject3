@@ -68,6 +68,10 @@ public class OrderService {
         // 최종 주문 가격 집계
         order.calcTotalPrice(orderFoodList);
 
+        if (order.getTotalPrice() - restaurant.getDeliveryFee() < restaurant.getMinOrderPrice()) {
+            throw new IllegalArgumentException("최소 주문가격 미달");
+        }
+
         List<OrderFoodResponseDto> foods = orderFoodList.stream()
                 .map(of ->
                         OrderFoodResponseDto.builder()
@@ -79,6 +83,7 @@ public class OrderService {
         return OrderResponseDto.builder()
                 .restaurantName(order.getRestaurant().getName())
                 .deliveryFee(order.getRestaurant().getDeliveryFee())
+                .totalPrice(order.getTotalPrice())
                 .foods(foods)
                 .build();
     }

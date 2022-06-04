@@ -17,7 +17,9 @@ import javax.persistence.*;
 public class Restaurant {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "RESTAURANT_SEQ_GENERATOR")
     @Column(name = "RESTAURANT_ID")
     private Long id;
 

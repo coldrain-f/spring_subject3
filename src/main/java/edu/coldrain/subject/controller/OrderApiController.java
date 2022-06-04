@@ -1,6 +1,7 @@
 package edu.coldrain.subject.controller;
 
 import com.sun.xml.bind.v2.TODO;
+import edu.coldrain.subject.dto.OrderFoodRequestDto;
 import edu.coldrain.subject.dto.OrderFoodResponseDto;
 import edu.coldrain.subject.dto.OrderRequestDto;
 import edu.coldrain.subject.dto.OrderResponseDto;
@@ -31,6 +32,13 @@ public class OrderApiController {
 
     @PostMapping("/order/request")
     public OrderResponseDto order(@RequestBody OrderRequestDto orderRequestDto) {
+        List<OrderFoodRequestDto> requestFoods = orderRequestDto.getFoods();
+        for (OrderFoodRequestDto requestFood : requestFoods) {
+            if (requestFood.getQuantity() < 1 || requestFood.getQuantity() > 100) {
+                throw new IllegalArgumentException("허용범위: 1 ~ 100");
+            }
+        }
+
         return orderService.order(orderRequestDto);
     }
 

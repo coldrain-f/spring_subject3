@@ -3,11 +3,10 @@ package edu.coldrain.subject.controller;
 import edu.coldrain.subject.entity.Restaurant;
 import edu.coldrain.subject.service.RestaurantService;
 import lombok.*;
+import org.hibernate.validator.constraints.Range;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -55,12 +54,10 @@ public class RestaurantApiController {
     static class RestaurantRegisterDTO {
         private String name;
 
-        @Min(value = 1000, message = "허용값: 1,000원 ~ 100,000원")
-        @Max(value = 100000, message = "허용값: 1,000원 ~ 100,000원")
+        @Range(min = 1000, max = 100000, message = "허용값: 1,000원 ~ 100,000원")
         private int minOrderPrice;
 
-        @Min(value = 0, message = "허용값: 0원 ~ 10,000원")
-        @Max(value = 10000, message = "허용값: 0원 ~ 10,000원")
+        @Range(min = 0, max = 10000, message = "허용값: 0원 ~ 10,000원")
         private int deliveryFee;
     }
 }

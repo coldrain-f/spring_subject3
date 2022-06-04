@@ -9,6 +9,12 @@ import javax.persistence.*;
 
 @Entity
 @Getter
+@Table(
+        uniqueConstraints = {
+                @UniqueConstraint(
+                        name = "FOOD_UNIQUE_CONSTRAINT",
+                        columnNames = {"name", "restaurant_id"})}
+)
 @SequenceGenerator(
         name = "FOOD_SEQ_GENERATOR",
         sequenceName = "FOOD_SEQ",
