@@ -1,11 +1,13 @@
 package edu.coldrain.subject.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -28,6 +30,11 @@ public class Order {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "RESTAURANT_ID")
     private Restaurant restaurant;
+
+    // 양방향 설정
+    @JsonIgnore
+    @OneToMany(mappedBy = "order")
+    private List<OrderFood> orderFoods = new ArrayList<>();
 
     // 최종 결제 금액
     private int totalPrice;

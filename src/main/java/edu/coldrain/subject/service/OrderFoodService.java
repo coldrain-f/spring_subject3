@@ -4,6 +4,7 @@ import edu.coldrain.subject.entity.OrderFood;
 import edu.coldrain.subject.repository.OrderFoodRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor

@@ -25,8 +25,6 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
         return query.select(order)
                 .from(order)
                 .join(order.restaurant, restaurant).fetchJoin()
-                //.join(order, orderFood.order)
-                //.join(orderFood.food, food)
                 .fetch();
     }
 }
