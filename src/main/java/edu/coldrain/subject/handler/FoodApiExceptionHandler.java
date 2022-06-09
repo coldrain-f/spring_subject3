@@ -1,7 +1,7 @@
 package edu.coldrain.subject.handler;
 
 import edu.coldrain.subject.controller.FoodApiController;
-import edu.coldrain.subject.handler.response.ErrorResult;
+import edu.coldrain.subject.handler.error.ErrorResult;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;

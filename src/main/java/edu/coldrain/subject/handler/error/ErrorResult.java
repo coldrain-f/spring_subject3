@@ -1,4 +1,4 @@
-package edu.coldrain.subject.handler.response;
+package edu.coldrain.subject.handler.error;
 
 import lombok.AccessLevel;
 import lombok.Builder;
